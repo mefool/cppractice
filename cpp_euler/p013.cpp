@@ -1,47 +1,68 @@
-/* Project Euler - Problem 11
-  What is the value of the first triangle number to have over five hundred divisors?
+/* Project Euler - Problem 13
+  Work out the first ten digits of the sum of the following(*) one-hundred 50-digit numbers
   
-  p012.exe
-  g++ p012.cpp -o p012.exe
+  p013.exe
+  g++ p013.cpp -o p013.exe
   
   Comments/Issues:
   
   References:
-  > https://en.wikipedia.org/wiki/Triangular_number
+  >
 
 */
 #include <iostream>
-
-#define N 20
-
-//int triangular_number(int index);
-unsigned divisor_count(unsigned long num);
-
+#include <fstream>
+#include <string>
 int main() {
-  unsigned long i=1, n=1;
-  while (divisor_count(n) < 500)
-    n += ++i;
+  /// unsigned long long sum = 0;
+  // no C++ standard data type could be used to get the sum
+  // unsigned long long max (ULLONG_MAX) from <climit> = 2^64-1
   
-  std::cout << n << std::endl;
+  //each digit will have to be calculated
+  
+  std::ifstream fin;
+  fin.open("p013_numbers.txt");
+  
+  if (!fin.is_open()){
+    std::cout << "unable to open the numbers file." << std::endl;
+    exit(1);
+  }
+
+  std::string num[100];
+  for (int i = 0; i < 100; i++)
+    std::getline(fin, num[i]);
+
+  fin.close();
+  
+  int sum[52];
+  for(int i = 0; i < 52; i++)
+    sum[i]=0;
+  
+  for(int i = 0; i < 52; i++){
+    if(i <= 49)
+      for(int j = 0; j < 100; j++){
+	/*
+	std::cout << "i: " << i << std::endl;
+	std::cout << "j: " << j << std::endl;
+	std::cout << "num[j][49-i]-'0': " << (int)(num[j][49-i]-'0') << std::endl;
+	*/
+	sum[i] += (int)(num[j][49-i]-'0');
+	if(sum[i]>=10){
+	  sum[i]-=10;
+	  sum[i+1]+=1;
+	}
+      }
+    else
+      while(sum[i]>=10){
+	sum[i]-=10;
+	sum[i+1]+=1;
+      }
+  }
+  
+  std::cout << "Last 10 digits: ";
+  for(int i = 51; i > 41; i--)
+    std::cout << sum[i];
+  std::cout << std::endl;
   return 0;
 }
 
-/*
-int triangular_number(int n){
-  return n*(n+1)/2;
-}
-*/
-
-unsigned divisor_count(unsigned long num){
-  unsigned ret = 1;
-  unsigned long i;
-  for (i=2; i <= num; i++){
-    unsigned c = 0;
-    while (num % i == 0){
-      c++;
-      num /= i;
-    }
-    ret *= c+1;
-  }
-  return ret;
-}
