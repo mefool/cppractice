@@ -1,5 +1,5 @@
 /**
- * Project Euler - Problem 1
+ * Project Euler - Problem 2
  * Consider the terms in the Fibonacci sequence whose values do not exceed four million.
  * Find the sum of the even-valued terms.
  * 
