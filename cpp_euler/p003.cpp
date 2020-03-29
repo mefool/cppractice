@@ -4,15 +4,15 @@
   g++ p003.cpp -o p3.exe
 
   Comments/Issues:
-  While the algorithm works for the number in question, a large number
-  (greater than INT_MAX) may not, if it's prime. The preformace could also be
-  improved by adding a vector of primes, to check if it is a factor of the
-  number, skipping the for cycle used in the current solution.
+  > While the algorithm works for the number in question, a large number
+  (greater than INT_MAX) may not, if it's prime. The performance could also 
+  be improved by adding a vector of primes, to check if it is a factor of 
+  the number, skipping the for cycle used in the current solution.
 */
 #include <iostream>
 
 int main() {
-  long long num = 600851475143;
+  long long num = 600851475143;;
   int i, largest_factor = 1;
 
   while (num != 1){
