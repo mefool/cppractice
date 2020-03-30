@@ -36,7 +36,7 @@ int main() {
   triangle_file.close();
 
   /* tested */
-  print_triangle(tri, SIZE);
+  //print_triangle(tri, SIZE);
   //int i = N-1, j = N-1;
   //std::cout << "tri("<<i<<","<<j<<") = "<<tri[index(i,j)];
 
@@ -50,7 +50,7 @@ int main() {
 	                  tri[index(i+1,j)] : tri[index(i+1,j+1)];	
     }
   }
-  print_triangle(tri, SIZE);
+  //print_triangle(tri, SIZE);
   std::cout << "Maximum total: " << tri[0] << std::endl;
   
   return 0;
