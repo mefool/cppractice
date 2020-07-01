@@ -23,7 +23,7 @@ bool is_sum_of_abundants(int num){
     return true;
 
   for (auto i : abundant_set){
-    if (i >= num/2)
+    if (i >= num)
       return false;
     int remain = num - i;
     if (abundant_set.count(remain) == 0)
