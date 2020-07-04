@@ -23,7 +23,7 @@ int is_prime(int num){
 }
 
 int main() {
-  int n_consecutive;
+  int n_consecutive = 0;
   int best_a = 0, best_b = 0;
 
   for (int a = -LIMIT; a <= LIMIT; a++){
