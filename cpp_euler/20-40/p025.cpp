@@ -31,6 +31,5 @@ int main() {
   double n = (999 * std::log(10) + 0.5 * std::log(5))/std::log(g_r);
   std::cout << "Result: " << std::ceil(n) << " (" << n << ")" << std::endl;
   
-  
   return 0;
 }
