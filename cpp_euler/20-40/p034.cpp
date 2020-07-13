@@ -4,6 +4,10 @@
   p034.exe
   g++ p034.cpp -o p034.exe
   
+  Comments/Issues:
+  > Missing explination on the limit, might be just trial and error but the 
+    limit can also be found.
+
 */
 #include <iostream>
 #include <string>
