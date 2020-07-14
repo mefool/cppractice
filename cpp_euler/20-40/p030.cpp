@@ -17,7 +17,7 @@ int main(/*int argc, char *argv[]*/) {
 
   int result = 0;
 
-  for (int i = 2; i<10E7; i++){ // 1! and 2! are not within the interval
+  for (int i = 2; i < 10E6; i++){ // 1! is not within the interval
     int sum = 0;
     int n = i;
     while (n > 0){
