@@ -7,6 +7,10 @@
   Comments/Issues:
   > 
 
+  References:
+  >> unordered set vs vector
+  > https://stackoverflow.com/questions/33875407/prefer-unordered-set-over-vector
+
 */
 #include <iostream>
 #include <vector>
@@ -35,15 +39,12 @@ int cycle_lenght(int d){
 }
 
 int main(int argc, char *argv[]) {
-  int max = 0, i_max = 0;
-  for (int i = 0; i < LIMIT; i++){
-    int lenght = cycle_lenght(i);
-    if (lenght > max){
-      max = lenght;
-      i_max = i;
-    }
-  }
-  std::cout << "Number with the maximum length: " << i_max << " (" << max << ")" << std::endl;
+  if (argc > 1){
+    int d = (std::stoi(argv[1]));
+    int result = cycle_lenght(d);
+    std::cout << "Result: " << result << std::endl;
+  } else
+    std::cout << "argv[1] -> denominator " << std::endl;
   return 0;
 	 
 }
