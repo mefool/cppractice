@@ -2,14 +2,10 @@
   Reciproval cycles
 
   p026.exe
-  g++ p026.cpp -o p026.exe
+  g++ p026a.cpp -o p026a.exe
   
   Comments/Issues:
   > 
-
-  References:
-  >> unordered set vs vector
-  > https://stackoverflow.com/questions/33875407/prefer-unordered-set-over-vector
 
 */
 #include <iostream>
