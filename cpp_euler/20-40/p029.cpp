@@ -10,7 +10,7 @@
   > (paper math)
 
   References:
-  > http://www.mathblog.dk/project-euler-29-distinct-terms-sequence-ab/ -
+  > http://www.mathblog.dk/project-euler-29-distinct-terms-sequence-ab/ - pen and paper solution
 
 */
 #include <iostream>
