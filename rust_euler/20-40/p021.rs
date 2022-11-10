@@ -34,7 +34,7 @@ fn p021(num: u32) -> u32 {
     return sum_am;
 }
 
-fn sum_prop_div (num: u32) -> u32 {
+fn sum_prop_div(num: u32) -> u32 {
     let mut sum = 1;
     let sqrt_num = (num as f64).sqrt() as u32 + 1;
     for i in 2..sqrt_num {
