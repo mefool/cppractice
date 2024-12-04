@@ -1,0 +1,227 @@
+
+* Part 1
+** context (after part 1 solution)
+#+begin_quote
+--- Day 4: Ceres Search ---
+"Looks like the Chief's not here. Next!" One of The Historians pulls out a device and pushes the only button on it. After a brief flash, you recognize the interior of the Ceres monitoring station!
+
+As the search for the Chief continues, a small Elf who lives on the station tugs on your shirt; she'd like to know if you could help her with her word search (your puzzle input). She only has to find one word: XMAS.
+
+This word search allows words to be horizontal, vertical, diagonal, written backwards, or even overlapping other words. It's a little unusual, though, as you don't merely need to find one instance of XMAS - you need to find all of them. Here are a few ways XMAS might appear, where irrelevant characters have been replaced with .:
+
+
+..X...
+.SAMX.
+.A..A.
+XMAS.S
+.X....
+The actual word search will be full of letters instead. For example:
+
+MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX
+In this word search, XMAS occurs a total of 18 times; here's the same word search again, but where letters not involved in any XMAS have been replaced with .:
+
+....XXMAS.
+.SAMXMS...
+...S..A...
+..A.A.MS.X
+XMASAMX.MM
+X.....XA.A
+S.S.S.S.SS
+.A.A.A.A.A
+..M.M.M.MM
+.X.X.XMASX
+Take a look at the little Elf's word search. How many times does XMAS appear?
+
+Your puzzle answer was 2593.
+
+The first half of this puzzle is complete! It provides one gold star: *
+#+end_quote
+** solution python | list of lists and some bounds validations
+#+begin_src python :results output
+data_example = open("./day4_input_example.txt").read()
+data_test = open("./day4_input_test.txt").read()
+data = open("./day4_input.txt").read()
+
+m_example = []
+for line in data_example.split('\n'):
+  if len(line)!=0 : m_example.append(list(line))
+  
+m_test = []
+for line in data_test.split('\n'):
+   if len(line)!=0 : m_test.append(list(line))
+  
+m = []
+for line in data.split('\n'):
+   if len(line)!=0 : m.append(list(line))
+
+def xmas_cnt(m, print_fl = 0):
+    xmas_len = len("XMAS")-1
+    xmas_cnt = 0
+    for i in range(len(m)):
+        for j in range(len(m[i])):
+            if (m[i][j] == 'X'):
+                # if print_fl: print("X (i,j): (", i, ",", j, ")")
+                ## horizontal
+                # horizontal j+
+                if (j < len(m[i])-(xmas_len)):
+                    if ("M" == m[i][j+1] and "A" == m[i][j+2] and "S" == m[i][j+3]):
+                        if print_fl: print("XMAS h+ (i,j+): (", i, ",", j, ")")
+                        xmas_cnt+=1
+                # horizontal j-
+                if (j >= xmas_len):
+                    if ("M" == m[i][j-1] and "A" == m[i][j-2] and "S" == m[i][j-3]):
+                        if print_fl: print("XMAS h- (i,j-): (", i, ",", j, ")")
+                        xmas_cnt+=1
+
+                ## vertical
+                # vertical i+
+                if (i < len(m)-(xmas_len)):
+                    if ("M" == m[i+1][j] and "A" == m[i+2][j] and "S" == m[i+3][j]):
+                        if print_fl: print("XMAS v+ (i+,j): (", i, ",", j, ")")
+                        xmas_cnt+=1
+                # vertical i-
+                if (i >= xmas_len):
+                    if ("M" == m[i-1][j] and "A" == m[i-2][j] and "S" == m[i-3][j]):
+                        if print_fl: print("XMAS v- (i-,j): (", i, ",", j, ")")
+                        xmas_cnt+=1
+
+                ## diagonal
+                # diagonal i+, j+
+                if (i < len(m)-(xmas_len) and j < len(m[i])-(xmas_len)):
+                    # if print_fl: print("(",i+1, "," , j+1, ") (", "(",i+2, "," , j+2, ") (", "(",i+3, "," , j+3, ")")
+                    if ("M" == m[i+1][j+1] and "A" == m[i+2][j+2] and "S" == m[i+3][j+3]):
+                        if print_fl: print("XMAS d++ (i+,j+): (", i, ",", j, ")")
+                        xmas_cnt+=1
+                # diagonal i+, j-
+                if (i < len(m)-(xmas_len) and j >= xmas_len):
+                    if ("M" == m[i+1][j-1] and "A" == m[i+2][j-2] and "S" == m[i+3][j-3]):
+                        if print_fl: print("XMAS d+- (i+,j-): (", i, ",", j, ")")
+                        xmas_cnt+=1
+                # diagonal i-, j+
+                if (i >= xmas_len and j < len(m[i])-(xmas_len)):
+                    if ("M" == m[i-1][j+1] and "A" == m[i-2][j+2] and "S" == m[i-3][j+3]):
+                        if print_fl: print("XMAS d-+ (i-,j+): (", i, ",", j, ")")
+                        xmas_cnt+=1
+                # diagonal i-, j-
+                if (i >= xmas_len and j >= xmas_len):
+                    if ("M" == m[i-1][j-1] and "A" == m[i-2][j-2] and "S" == m[i-3][j-3]):
+                        if print_fl: print("XMAS d-- (i+,j-): (", i, ",", j, ")")
+                        xmas_cnt+=1
+    return xmas_cnt
+
+
+print("xmas_cnt(m_test): ", xmas_cnt(m_test, 1))
+print("xmas_cnt(m_example): ", xmas_cnt(m_example))
+print("xmas_cnt(m): ", xmas_cnt(m))
+#+end_src
+
+#+RESULTS:
+#+begin_example
+XMAS h+ (i,j+): ( 3 , 3 )
+XMAS h- (i,j-): ( 3 , 3 )
+XMAS v+ (i+,j): ( 3 , 3 )
+XMAS v- (i-,j): ( 3 , 3 )
+XMAS d++ (i+,j+): ( 3 , 3 )
+XMAS d+- (i+,j-): ( 3 , 3 )
+XMAS d-+ (i-,j+): ( 3 , 3 )
+XMAS d-- (i+,j-): ( 3 , 3 )
+xmas_cnt(m_test):  8
+xmas_cnt(m_example):  18
+xmas_cnt(m):  2593
+#+end_example
+
+** https://adventofcode.com/2024/day/4/answer
+#+begin_quote
+That's the right answer! You are one gold star closer to finding the Chief Historian. [Continue to Part Two]
+#+end_quote
+
+* Part 2 https://adventofcode.com/2024/day/4#part2
+#+begin_quote
+--- Part Two ---
+The Elf looks quizzically at you. Did you misunderstand the assignment?
+
+Looking for the instructions, you flip over the word search to find that this isn't actually an XMAS puzzle; it's an X-MAS puzzle in which you're supposed to find two MAS in the shape of an X. One way to achieve that is like this:
+
+M.S
+.A.
+M.S
+Irrelevant characters have again been replaced with . in the above diagram. Within the X, each MAS can be written forwards or backwards.
+
+Here's the same example from before, but this time all of the X-MASes have been kept instead:
+
+.M.S......
+..A..MSMS.
+.M.S.MAA..
+..A.ASMSM.
+.M.S.M....
+..........
+S.S.S.S.S.
+.A.A.A.A..
+M.M.M.M.M.
+..........
+In this example, an X-MAS appears 9 times.
+
+Flip the word search from the instructions back over to the word search side and try again. How many times does an X-MAS appear?
+#+end_quote
+** solution
+#+begin_src python :results output
+data_example = open("./day4_input_example.txt").read()
+data_test = open("./day4_input_test_part2.txt").read()
+data = open("./day4_input.txt").read()
+
+m_example = []
+for line in data_example.split('\n'):
+  if len(line)!=0 : m_example.append(list(line))
+
+m = []
+for line in data.split('\n'):
+  if len(line)!=0 : m.append(list(line))
+
+print("--- Part Two ---")
+m_test = []
+for line in data_test.split('\n'):
+   if len(line)!=0 : m_test.append(list(line))
+
+def x_mas_cnt(m, print_fl = 0):
+    x = [[[-1,-1], [1,-1], [-1, 1], [1, 1]],
+         [[-1,-1], [-1,1], [1, -1], [1, 1]],
+         [[-1, 1], [1, 1], [-1,-1], [1,-1], ],
+         [[1, -1], [1, 1], [-1,-1], [-1,1], ],
+         ]
+    x_mas_cnt = 0
+    for i in range(1, len(m)-1):
+        for j in range(1, len(m[i])-1):
+            if (m[i][j] == 'A'):
+                for x_ij in x:
+                    if (m[i+x_ij[0][0]][j+x_ij[0][1]] == 'M' and m[i+x_ij[1][0]][j+x_ij[1][1]] == 'M' and
+                        m[i+x_ij[2][0]][j+x_ij[2][1]] == 'S' and m[i+x_ij[3][0]][j+x_ij[3][1]] == 'S'):
+                        x_mas_cnt += 1
+
+    return x_mas_cnt
+
+print("x_mas_cnt(m_test_part2): ", x_mas_cnt(m_test))
+print("x_mas_cnt(m_example): ", x_mas_cnt(m_example))
+print("x_mas_cnt(m): ", x_mas_cnt(m))
+#+end_src
+
+#+RESULTS:
+: --- Part Two ---
+: x_mas_cnt(m_test_part2):  4
+: x_mas_cnt(m_example):  9
+: x_mas_cnt(m):  1950
+
+** reply
+#+begin_quote
+That's the right answer! You are one gold star closer to finding the Chief Historian.
+
+You have completed Day 4! You can [Share] this victory or [Return to Your Advent Calendar].
+#+end_quote
